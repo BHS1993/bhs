@@ -1,0 +1,12 @@
+| ফিচার                                       | টেকনোলজি                   | কোড ফাইল/ফোল্ডার   |
+| ------------------------------------------- | -------------------------- | ------------------ |
+| 1️⃣ **Admin Dashboard**                     | HTML + PHP (বা Node.js)    | `/admin/`          |
+| 2️⃣ **Attendance System (with Google Map)** | HTML + JS + PHP + MySQL    | `/attendance/`     |
+| 3️⃣ **ID Card Generator**                   | HTML + CSS + PDF Generator | `/id-cards/`       |
+| 4️⃣ **Result Upload & View**                | HTML + PHP + MySQL         | `/results/`        |
+| 5️⃣ **SMS Integration**                     | PHP/JS with API            | `/sms/`            |
+| 6️⃣ **Online Admission System**             | HTML + PHP + DB            | `/admission/`      |
+| 7️⃣ **Online Classes**                      | HTML + Zoom/YouTube embed  | `/online-classes/` |
+| 8️⃣ **Alumni System**                       | HTML + PHP + DB            | `/alumni/`         |
+| 9️⃣ **Academic Calendar + Syllabus**        | HTML + JS                  | `/calendar/`       |
+| 🔟 **Certificate Management**               | HTML + DB + PDF Generator  | `/certificates/`   |

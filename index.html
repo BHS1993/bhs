@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Classes - ভাটিয়া উচ্চ বিদ্যালয়</title>
+    <meta name="description" content="ভাটিয়া উচ্চ বিদ্যালয়ের অনলাইন ক্লাস ও ভার্চুয়াল শ্রেণীকক্ষ">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/school-theme.css">
+    
+    <!-- Online Classes Specific Styles -->
+    <style>
+        .classes-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: var(--spacing-2xl) 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .classes-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="tech" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="20" width="10" height="10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23tech)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .classes-header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .classes-title {
+            font-size: var(--font-size-4xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .classes-subtitle {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.9;
+        }
+        
+        .breadcrumb-nav {
+            background: var(--white);
+            padding: var(--spacing-md) 0;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .breadcrumb-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: var(--gray);
+            font-size: var(--font-size-sm);
+        }
+        
+        .breadcrumb-content a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .classes-container {
+            max-width: 1200px;
+            margin: var(--spacing-xl) auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .classes-tabs {
+            display: flex;
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-xl);
+            overflow: hidden;
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: var(--spacing-lg);
+            background: none;
+            border: none;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .tab-button:hover {
+            background: var(--light-gray);
+            color: var(--primary-color);
+        }
+        
+        .tab-button.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .classes-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: var(--spacing-xl);
+        }
+        
+        .classes-main {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        
+        .classes-header-bar {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: var(--font-size-lg);
+        }
+        
+        .video-placeholder {
+            text-align: center;
+        }
+        
+        .video-placeholder i {
+            font-size: var(--font-size-4xl);
+            margin-bottom: var(--spacing-md);
+            opacity: 0.7;
+        }
+        
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .control-btn.primary {
+            background: var(--accent-color);
+            width: 50px;
+            height: 50px;
+        }
+        
+        .control-btn.primary:hover {
+            background: #218838;
+        }
+        
+        .video-progress {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--accent-color);
+            width: 30%;
+            transition: width var(--transition-fast);
+        }
+        
+        .video-time {
+            color: var(--white);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+        }
+        
+        .class-info {
+            padding: var(--spacing-xl);
+        }
+        
+        .class-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .class-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-size-sm);
+            color: var(--gray);
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .class-description {
+            color: var(--dark-gray);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .class-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: var(--light-gray);
+            border: none;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+        
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+        
+        .action-btn.primary {
+            background: var(--accent-color);
+            color: var(--white);
+        }
+        
+        .action-btn.primary:hover {
+            background: #218838;
+        }
+        
+        .action-btn.danger {
+            background: var(--danger-color);
+            color: var(--white);
+        }
+        
+        .action-btn.danger:hover {
+            background: #c82333;
+        }
+        
+        .classes-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .upcoming-classes {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-lg);
+        }
+        
+        .sidebar-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .class-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            margin-bottom: var(--spacing-sm);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .class-item:hover {
+            background: var(--light-gray);
+        }
+        
+        .class-item.active {
+            background: rgba(0, 87, 146, 0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .class-time {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            text-align: center;
+            min-width: 60px;
+        }
+        
+        .class-details {
+            flex: 1;
+        }
+        
+        .class-subject {
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--dark-gray);
+        }
+        
+        .class-teacher {
+            font-size: var(--font-size-sm);
+            color: var(--gray);
+        }
+        
+        .class-status {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+        
+        .status-live {
+            background: var(--danger-color);
+            color: var(--white);
+        }
+        
+        .status-upcoming {
+            background: var(--warning-color);
+            color: var(--white);
+        }
+        
+        .status-ended {
+            background: var(--gray);
+            color: var(--white);
+        }
+        
+        .chat-panel {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+        }
+        
+        .chat-header {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: var(--spacing-md);
+            overflow-y: auto;
+            background: var(--light-gray);
+        }
+        
+        .chat-message {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .message-sender {
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .message-text {
+            background: var(--white);
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius-md);
+            color: var(--dark-gray);
+            line-height: 1.4;
+        }
+        
+        .message-time {
+            font-size: var(--font-size-xs);
+            color: var(--gray);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: var(--spacing-md);
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: var(--spacing-sm);
+            border: 1px solid #dee2e6;
+            border-radius: var(--border-radius-md);
+            margin-right: var(--spacing-sm);
+        }
+        
+        .chat-send {
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+        }
+        
+        .classes-list {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        
+        .list-header {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid #dee2e6;
+            border-radius: var(--border-radius-md);
+            font-size: var(--font-size-base);
+        }
+        
+        .search-btn {
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .class-card {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid #f8f9fa;
+            transition: all var(--transition-fast);
+        }
+        
+        .class-card:hover {
+            background: var(--light-gray);
+        }
+        
+        .class-card:last-child {
+            border-bottom: none;
+        }
+        
+        .class-thumbnail {
+            width: 120px;
+            height: 80px;
+            background: var(--light-gray);
+            border-radius: var(--border-radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: var(--font-size-2xl);
+            flex-shrink: 0;
+        }
+        
+        .class-info-card {
+            flex: 1;
+        }
+        
+        .class-title-card {
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--dark-gray);
+        }
+        
+        .class-meta-card {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+            color: var(--gray);
+        }
+        
+        .class-description-card {
+            color: var(--gray);
+            font-size: var(--font-size-sm);
+            line-height: 1.4;
+        }
+        
+        .class-actions-card {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+        
+        .card-action-btn {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border: none;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+        }
+        
+        .card-action-btn.join {
+            background: var(--accent-color);
+            color: var(--white);
+        }
+        
+        .card-action-btn.watch {
+            background: var(--info-color);
+            color: var(--white);
+        }
+        
+        .card-action-btn.download {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .card-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .create-class-form {
+            padding: var(--spacing-xl);
+        }
+        
+        .form-section {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .form-row.single {
+            grid-template-columns: 1fr;
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+        
+        .required {
+            color: var(--danger-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-size: var(--font-size-base);
+            border: 2px solid #dee2e6;
+            border-radius: var(--border-radius-md);
+            transition: all var(--transition-fast);
+            font-family: var(--font-family-bengali);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 87, 146, 0.1);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-lg);
+            text-align: center;
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xl);
+            margin: 0 auto var(--spacing-md);
+        }
+        
+        .stat-number {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .classes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .classes-sidebar {
+                order: -1;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .classes-tabs {
+                flex-direction: column;
+            }
+            
+            .video-container {
+                height: 250px;
+            }
+            
+            .class-actions {
+                flex-direction: column;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="classes-header">
+        <div class="classes-header-content">
+            <div class="container">
+                <h1 class="classes-title bengali-text">অনলাইন ক্লাস</h1>
+                <p class="classes-subtitle bengali-text">ভার্চুয়াল শ্রেণীকক্ষ ও ভিডিও শিক্ষা</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-nav">
+        <div class="breadcrumb-content">
+            <a href="../index.html">হোম</a>
+            <i class="fas fa-chevron-right"></i>
+            <span class="bengali-text">অনলাইন ক্লাস</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="classes-container">
+        <!-- Tabs -->
+        <div class="classes-tabs">
+            <button class="tab-button active" data-tab="live-class">
+                <i class="fas fa-video"></i>
+                <span class="bengali-text">লাইভ ক্লাস</span>
+            </button>
+            <button class="tab-button" data-tab="recorded-classes">
+                <i class="fas fa-play-circle"></i>
+                <span class="bengali-text">রেকর্ডেড ক্লাস</span>
+            </button>
+            <button class="tab-button" data-tab="create-class">
+                <i class="fas fa-plus-circle"></i>
+                <span class="bengali-text">ক্লাস তৈরি</span>
+            </button>
+            <button class="tab-button" data-tab="schedule">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="bengali-text">সময়সূচী</span>
+            </button>
+            <button class="tab-button" data-tab="analytics">
+                <i class="fas fa-chart-line"></i>
+                <span class="bengali-text">পরিসংখ্যান</span>
+            </button>
+        </div>
+
+        <!-- Live Class Tab -->
+        <div id="live-class" class="tab-content active">
+            <div class="classes-grid">
+                <!-- Main Video Area -->
+                <div class="classes-main">
+                    <div class="classes-header-bar">
+                        <h3 class="bengali-text">গণিত - দশম শ্রেণী</h3>
+                        <div>
+                            <span class="status-live bengali-text">লাইভ</span>
+                        </div>
+                    </div>
+                    
+                    <div class="video-container" id="videoContainer">
+                        <div class="video-placeholder">
+                            <i class="fas fa-play-circle"></i>
+                            <div class="bengali-text">ভিডিও লোড হচ্ছে...</div>
+                        </div>
+                        
+                        <div class="video-controls">
+                            <button class="control-btn primary" onclick="togglePlay()">
+                                <i class="fas fa-play" id="playIcon"></i>
+                            </button>
+                            <button class="control-btn" onclick="toggleMute()">
+                                <i class="fas fa-volume-up" id="volumeIcon"></i>
+                            </button>
+                            <div class="video-progress">
+                                <div class="progress-bar" id="progressBar"></div>
+                            </div>
+                            <div class="video-time">
+                                <span id="currentTime">00:00</span> / <span id="totalTime">45:00</span>
+                            </div>
+                            <button class="control-btn" onclick="toggleFullscreen()">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="class-info">
+                        <h2 class="class-title bengali-text">বীজগণিত - সমীকরণ সমাধান</h2>
+                        
+                        <div class="class-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i>
+                                <span class="bengali-text">শিক্ষক: মোঃ রহিম উদ্দিন</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users"></i>
+                                <span class="bengali-text">৪৫ জন অংশগ্রহণকারী</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span class="bengali-text">সময়: ১০:০০ - ১০:৪৫</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span class="bengali-text">তারিখ: ১৫ জানুয়ারি, ২০২৪</span>
+                            </div>
+                        </div>
+                        
+                        <div class="class-description bengali-text">
+                            আজকের ক্লাসে আমরা বীজগণিতের মূল ধারণা এবং সমীকরণ সমাধানের বিভিন্ন পদ্ধতি নিয়ে আলোচনা করব। 
+                            শিক্ষার্থীরা ব্যবহারিক সমস্যার মাধ্যমে বীজগণিতের প্রয়োগ শিখবে।
+                        </div>
+                        
+                        <div class="class-actions">
+                            <button class="action-btn primary" onclick="joinClass()">
+                                <i class="fas fa-video"></i>
+                                <span class="bengali-text">ক্লাসে যোগ দিন</span>
+                            </button>
+                            <button class="action-btn" onclick="raiseHand()">
+                                <i class="fas fa-hand-paper"></i>
+                                <span class="bengali-text">হাত তুলুন</span>
+                            </button>
+                            <button class="action-btn" onclick="shareScreen()">
+                                <i class="fas fa-desktop"></i>
+                                <span class="bengali-text">স্ক্রিন শেয়ার</span>
+                            </button>
+                            <button class="action-btn" onclick="downloadMaterial()">
+                                <i class="fas fa-download"></i>
+                                <span class="bengali-text">উপকরণ ডাউনলোড</span>
+                            </button>
+                            <button class="action-btn danger" onclick="leaveClass()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span class="bengali-text">ক্লাস ছাড়ুন</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="classes-sidebar">
+                    <!-- Upcoming Classes -->
+                    <div class="upcoming-classes">
+                        <h3 class="sidebar-title">
+                            <i class="fas fa-clock"></i>
+                            <span class="bengali-text">আজকের ক্লাস</span
+
+>
+                        </h3>
+                        
+                        <div class="class-item active">
+                            <div class="class-time">
+                                <div>১০:০০</div>
+                                <div>AM</div>
+                            </div>
+                            <div class="class-details">
+                                <div class="class-subject bengali-text">গণিত</div>
+                                <div class="class-teacher bengali-text">মোঃ রহিম উদ্দিন</div>
+                            </div>
+                            <div class="class-status status-live bengali-text">লাইভ</div>
+                        </div>
+                        
+                        <div class="class-item">
+                            <div class="class-time">
+                                <div>১১:০০</div>
+                                <div>AM</div>
+                            </div>
+                            <div class="class-details">
+                                <div class="class-subject bengali-text">বাংলা</div>
+                                <div class="class-teacher bengali-text">ড. ফাতিমা খাতুন</div>
+                            </div>
+                            <div class="class-status status-upcoming bengali-text">আসছে</div>
+                        </div>
+                        
+                        <div class="class-item">
+                            <div class="class-time">
+                                <div>১২:০০</div>
+                                <div>PM</div>
+                            </div>
+                            <div class="class-details">
+                                <div class="class-subject bengali-text">ইংরেজি</div>
+                                <div class="class-teacher bengali-text">মিসেস রহিমা</div>
+                            </div>
+                            <div class="class-status status-upcoming bengali-text">আসছে</div>
+                        </div>
+                        
+                        <div class="class-item">
+                            <div class="class-time">
+                                <div>০৯:০০</div>
+                                <div>AM</div>
+                            </div>
+                            <div class="class-details">
+                                <div class="class-subject bengali-text">বিজ্ঞান</div>
+                                <div class="class-teacher bengali-text">মোঃ করিম</div>
+                            </div>
+                            <div class="class-status status-ended bengali-text">শেষ</div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Panel -->
+                    <div class="chat-panel">
+                        <div class="chat-header">
+                            <i class="fas fa-comments"></i>
+                            <span class="bengali-text">ক্লাস চ্যাট</span>
+                        </div>
+                        
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="chat-message">
+                                <div class="message-sender bengali-text">শিক্ষক</div>
+                                <div class="message-text bengali-text">সবাইকে স্বাগতম! আজকের ক্লাসে আমরা বীজগণিত নিয়ে আলোচনা করব।</div>
+                                <div class="message-time">১০:০২ AM</div>
+                            </div>
+                            
+                            <div class="chat-message">
+                                <div class="message-sender bengali-text">রহিম</div>
+                                <div class="message-text bengali-text">স্যার, আমি প্রস্তুত!</div>
+                                <div class="message-time">১০:০৩ AM</div>
+                            </div>
+                            
+                            <div class="chat-message">
+                                <div class="message-sender bengali-text">ফাতিমা</div>
+                                <div class="message-text bengali-text">স্যার, গতকালের হোমওয়ার্ক নিয়ে একটা প্রশ্ন আছে।</div>
+                                <div class="message-time">১০:০৪ AM</div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input">
+                            <input type="text" id="chatInput" placeholder="বার্তা লিখুন..." />
+                            <button class="chat-send" onclick="sendMessage()">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recorded Classes Tab -->
+        <div id="recorded-classes" class="tab-content">
+            <div class="classes-list">
+                <div class="list-header">
+                    <h3 class="bengali-text">রেকর্ডেড ক্লাস তালিকা</h3>
+                    <div>
+                        <button class="btn btn-primary" onclick="uploadRecording()">
+                            <i class="fas fa-upload"></i>
+                            <span class="bengali-text">আপলোড</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="padding: var(--spacing-lg);">
+                    <div class="search-box">
+                        <input type="text" class="search-input" placeholder="ক্লাস খুঁজুন..." id="classSearch">
+                        <button class="search-btn" onclick="searchClasses()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <div id="recordedClassesList">
+                        <!-- Sample Recorded Classes -->
+                        <div class="class-card">
+                            <div class="class-thumbnail">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="class-info-card">
+                                <div class="class-title-card bengali-text">গণিত - বীজগণিত পরিচিতি</div>
+                                <div class="class-meta-card">
+                                    <span class="bengali-text">শিক্ষক: মোঃ রহিম উদ্দিন</span>
+                                    <span class="bengali-text">সময়: ৪৫ মিনিট</span>
+                                    <span class="bengali-text">তারিখ: ১০ জানুয়ারি</span>
+                                </div>
+                                <div class="class-description-card bengali-text">
+                                    বীজগণিতের মূল ধারণা এবং প্রাথমিক সমীকরণ সমাধানের পদ্ধতি।
+                                </div>
+                            </div>
+                            <div class="class-actions-card">
+                                <button class="card-action-btn watch" onclick="watchRecording('math-001')">
+                                    <i class="fas fa-play"></i> দেখুন
+                                </button>
+                                <button class="card-action-btn download" onclick="downloadRecording('math-001')">
+                                    <i class="fas fa-download"></i> ডাউনলোড
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="class-card">
+                            <div class="class-thumbnail">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="class-info-card">
+                                <div class="class-title-card bengali-text">বাংলা - কবিতা আবৃত্তি</div>
+                                <div class="class-meta-card">
+                                    <span class="bengali-text">শিক্ষক: ড. ফাতিমা খাতুন</span>
+                                    <span class="bengali-text">সময়: ৩০ মিনিট</span>
+                                    <span class="bengali-text">তারিখ: ০৮ জানুয়ারি</span>
+                                </div>
+                                <div class="class-description-card bengali-text">
+                                    কবিতা আবৃত্তির সঠিক উচ্চারণ এবং ভাব প্রকাশের কৌশল।
+                                </div>
+                            </div>
+                            <div class="class-actions-card">
+                                <button class="card-action-btn watch" onclick="watchRecording('bangla-001')">
+                                    <i class="fas fa-play"></i> দেখুন
+                                </button>
+                                <button class="card-action-btn download" onclick="downloadRecording('bangla-001')">
+                                    <i class="fas fa-download"></i> ডাউনলোড
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="class-card">
+                            <div class="class-thumbnail">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="class-info-card">
+                                <div class="class-title-card bengali-text">ইংরেজি - গ্রামার বেসিক</div>
+                                <div class="class-meta-card">
+                                    <span class="bengali-text">শিক্ষক: মিসেস রহিমা</span>
+                                    <span class="bengali-text">সময়: ৪০ মিনিট</span>
+                                    <span class="bengali-text">তারিখ: ০৫ জানুয়ারি</span>
+                                </div>
+                                <div class="class-description-card bengali-text">
+                                    ইংরেজি গ্রামারের মূল নিয়ম এবং বাক্য গঠনের পদ্ধতি।
+                                </div>
+                            </div>
+                            <div class="class-actions-card">
+                                <button class="card-action-btn watch" onclick="watchRecording('english-001')">
+                                    <i class="fas fa-play"></i> দেখুন
+                                </button>
+                                <button class="card-action-btn download" onclick="downloadRecording('english-001')">
+                                    <i class="fas fa-download"></i> ডাউনলোড
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="class-card">
+                            <div class="class-thumbnail">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="class-info-card">
+                                <div class="class-title-card bengali-text">বিজ্ঞান - পদার্থের অবস্থা</div>
+                                <div class="class-meta-card">
+                                    <span class="bengali-text">শিক্ষক: মোঃ করিম</span>
+                                    <span class="bengali-text">সময়: ৫০ মিনিট</span>
+                                    <span class="bengali-text">তারিখ: ০৩ জানুয়ারি</span>
+                                </div>
+                                <div class="class-description-card bengali-text">
+                                    কঠিন, তরল ও গ্যাসীয় পদার্থের বৈশিষ্ট্য এবং পরিবর্তন।
+                                </div>
+                            </div>
+                            <div class="class-actions-card">
+                                <button class="card-action-btn watch" onclick="watchRecording('science-001')">
+                                    <i class="fas fa-play"></i> দেখুন
+                                </button>
+                                <button class="card-action-btn download" onclick="downloadRecording('science-001')">
+                                    <i class="fas fa-download"></i> ডাউনলোড
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Class Tab -->
+        <div id="create-class" class="tab-content">
+            <div class="classes-main">
+                <div class="classes-header-bar">
+                    <h3 class="bengali-text">নতুন ক্লাস তৈরি করুন</h3>
+                    <div>
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                </div>
+                
+                <div class="create-class-form">
+                    <form id="createClassForm">
+                        <!-- Basic Information -->
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="bengali-text">মূল তথ্য</span>
+                            </h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="className" class="form-label bengali-text">
+                                        ক্লাসের নাম <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="className" name="className" class="form-control" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="classSubject" class="form-label bengali-text">
+                                        বিষয় <span class="required">*</span>
+                                    </label>
+                                    <select id="classSubject" name="classSubject" class="form-control" required>
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="bangla">বাংলা</option>
+                                        <option value="english">ইংরেজি</option>
+                                        <option value="math">গণিত</option>
+                                        <option value="science">বিজ্ঞান</option>
+                                        <option value="social">সামাজিক বিজ্ঞান</option>
+                                        <option value="religion">ধর্ম</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="classGrade" class="form-label bengali-text">
+                                        শ্রেণী <span class="required">*</span>
+                                    </label>
+                                    <select id="classGrade" name="classGrade" class="form-control" required>
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="6">ষষ্ঠ শ্রেণী</option>
+                                        <option value="7">সপ্তম শ্রেণী</option>
+                                        <option value="8">অষ্টম শ্রেণী</option>
+                                        <option value="9">নবম শ্রেণী</option>
+                                        <option value="10">দশম শ্রেণী</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="classTeacher" class="form-label bengali-text">
+                                        শিক্ষক <span class="required">*</span>
+                                    </label>
+                                    <select id="classTeacher" name="classTeacher" class="form-control" required>
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="rahim">মোঃ রহিম উদ্দিন</option>
+                                        <option value="fatima">ড. ফাতিমা খাতুন</option>
+                                        <option value="rahima">মিসেস রহিমা</option>
+                                        <option value="karim">মোঃ করিম</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row single">
+                                <div class="form-group">
+                                    <label for="classDescription" class="form-label bengali-text">
+                                        ক্লাসের বিবরণ <span class="required">*</span>
+                                    </label>
+                                    <textarea id="classDescription" name="classDescription" class="form-control" rows="4" required placeholder="ক্লাসের বিষয়বস্তু এবং উদ্দেশ্য লিখুন..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Schedule Information -->
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span class="bengali-text">সময়সূচী</span>
+                            </h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="classDate" class="form-label bengali-text">
+                                        তারিখ <span class="required">*</span>
+                                    </label>
+                                    <input type="date" id="classDate" name="classDate" class="form-control" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="classTime" class="form-label bengali-text">
+                                        সময় <span class="required">*</span>
+                                    </label>
+                                    <input type="time" id="classTime" name="classTime" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="classDuration" class="form-label bengali-text">
+                                        সময়কাল (মিনিট) <span class="required">*</span>
+                                    </label>
+                                    <select id="classDuration" name="classDuration" class="form-control" required>
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="30">৩০ মিনিট</option>
+                                        <option value="45">৪৫ মিনিট</option>
+                                        <option value="60">৬০ মিনিট</option>
+                                        <option value="90">৯০ মিনিট</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="classType" class="form-label bengali-text">
+                                        ক্লাসের ধরন <span class="required">*</span>
+                                    </label>
+                                    <select id="classType" name="classType" class="form-control" required>
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="live">লাইভ ক্লাস</option>
+                                        <option value="recorded">রেকর্ডেড ক্লাস</option>
+                                        <option value="hybrid">হাইব্রিড ক্লাস</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Settings -->
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <i class="fas fa-cog"></i>
+                                <span class="bengali-text">সেটিংস</span>
+                            </h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label bengali-text">
+                                        <input type="checkbox" name="allowRecording" value="1">
+                                        ক্লাস রেকর্ড করুন
+                                    </label>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label bengali-text">
+                                        <input type="checkbox" name="allowChat" value="1" checked>
+                                        চ্যাট সক্রিয় করুন
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label bengali-text">
+                                        <input type="checkbox" name="requirePassword" value="1">
+                                        পাসওয়ার্ড প্রয়োজন
+                                    </label>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label bengali-text">
+                                        <input type="checkbox" name="sendNotification" value="1" checked>
+                                        বিজ্ঞপ্তি পাঠান
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: var(--spacing-xl);">
+                            <button type="button" class="btn btn-primary btn-lg" onclick="createClass()">
+                                <i class="fas fa-plus-circle"></i>
+                                <span class="bengali-text">ক্লাস তৈরি করুন</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Schedule Tab -->
+        <div id="schedule" class="tab-content">
+            <div class="classes-main">
+                <div class="classes-header-bar">
+                    <h3 class="bengali-text">ক্লাস সময়সূচী</h3>
+                    <div>
+                        <button class="btn btn-primary" onclick="exportSchedule()">
+                            <i class="fas fa-download"></i>
+                            <span class="bengali-text">এক্সপোর্ট</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="padding: var(--spacing-xl);">
+                    <!-- Weekly Schedule -->
+                    <div class="schedule-grid">
+                        <table class="schedule-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: var(--primary-color); color: var(--white);">
+                                    <th style="padding: var(--spacing-md); border: 1px solid #dee2e6;" class="bengali-text">সময়</th>
+                                    <th style="padding: var(--spacing-md); border: 1px solid #dee2e6;" class="bengali-text">রবিবার</th>
+                                    <th style="padding: var(--spacing-md); border: 1px solid #dee2e6;" class="bengali-text">সোমবার</th>
+                                    <th style="padding: var(--spacing-md); border: 1px solid #dee2e6;" class="bengali-text">মঙ্গলবার</th>
+                                    <th style="padding: var(--spacing-md); border: 1px solid #dee2e6;" class="bengali-text">বুধবার</th>
+                                    <th style="padding: var(--spacing-md); border: 1px solid #dee2e6;" class="bengali-text">বৃহস্পতিবার</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; font-weight: 600;">৯:০০ - ৯:৪৫</td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(0, 87, 146, 0.1);" class="bengali-text">গণিত<br><small>দশম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(40, 167, 69, 0.1);" class="bengali-text">বাংলা<br><small>নবম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(255, 193, 7, 0.1);" class="bengali-text">ইংরেজি<br><small>অষ্টম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(220, 53, 69, 0.1);" class="bengali-text">বিজ্ঞান<br><small>সপ্তম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(111, 66, 193, 0.1);" class="bengali-text">সামাজিক<br><small>ষষ্ঠ শ্রেণী</small></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; font-weight: 600;">১০:০০ - ১০:৪৫</td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(40, 167, 69, 0.1);" class="bengali-text">বাংলা<br><small>দশম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(255, 193, 7, 0.1);" class="bengali-text">ইংরেজি<br><small>নবম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(0, 87, 146, 0.1);" class="bengali-text">গণিত<br><small>অষ্টম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(111, 66, 193, 0.1);" class="bengali-text">সামাজিক<br><small>সপ্তম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(220, 53, 69, 0.1);" class="bengali-text">বিজ্ঞান<br><small>ষষ্ঠ শ্রেণী</small></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; font-weight: 600;">১১:০০ - ১১:৪৫</td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(255, 193, 7, 0.1);" class="bengali-text">ইংরেজি<br><small>দশম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(220, 53, 69, 0.1);" class="bengali-text">বিজ্ঞান<br><small>নবম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(111, 66, 193, 0.1);" class="bengali-text">সামাজিক<br><small>অষ্টম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(0, 87, 146, 0.1);" class="bengali-text">গণিত<br><small>সপ্তম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(40, 167, 69, 0.1);" class="bengali-text">বাংলা<br><small>ষষ্ঠ শ্রেণী</small></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; font-weight: 600;">১২:০০ - ১২:৪৫</td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(220, 53, 69, 0.1);" class="bengali-text">বিজ্ঞান<br><small>দশম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(111, 66, 193, 0.1);" class="bengali-text">সামাজিক<br><small>নবম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(40, 167, 69, 0.1);" class="bengali-text">বাংলা<br><small>অষ্টম শ্রেণী</small></td>
+                                    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(255, 193, 7, 0.1);" class="bengali-text">ইংরেজি<br><small>সপ
+<!-- ...existing code... -->
+<td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(255, 193, 7, 0.1);" class="bengali-text">ইংরেজি<br><small>সপ্তম শ্রেণী</small></td>
+<td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(0, 87, 146, 0.1);" class="bengali-text">গণিত<br><small>ষষ্ঠ শ্রেণী</small></td>
+</tr>
+<tr>
+    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; font-weight: 600;">১:০০ - ১:৪৫</td>
+    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(111, 66, 193, 0.1);" class="bengali-text">সামাজিক<br><small>দশম শ্রেণী</small></td>
+    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(0, 87, 146, 0.1);" class="bengali-text">গণিত<br><small>নবম শ্রেণী</small></td>
+    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(40, 167, 69, 0.1);" class="bengali-text">বাংলা<br><small>অষ্টম শ্রেণী</small></td>
+    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(255, 193, 7, 0.1);" class="bengali-text">ইংরেজি<br><small>সপ্তম শ্রেণী</small></td>
+    <td style="padding: var(--spacing-md); border: 1px solid #dee2e6; background: rgba(220, 53, 69, 0.1);" class="bengali-text">বিজ্ঞান<br><small>ষষ্ঠ শ্রেণী</small></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Analytics Tab -->
+<div id="analytics" class="tab-content">
+    <div class="classes-main">
+        <div class="classes-header-bar">
+            <h3 class="bengali-text">পরিসংখ্যান</h3>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-number">৪৫০+</div>
+                <div class="stat-label bengali-text">মোট শিক্ষার্থী</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                <div class="stat-number">২০+</div>
+                <div class="stat-label bengali-text">শিক্ষক</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-video"></i></div>
+                <div class="stat-number">১০০+</div>
+                <div class="stat-label bengali-text">লাইভ ক্লাস</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-play-circle"></i></div>
+                <div class="stat-number">২০০+</div>
+                <div class="stat-label bengali-text">রেকর্ডেড ক্লাস</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script>
+    // Tab switching
+    document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
+        });
+    });
+
+    // Dummy video controls
+    function togglePlay() {
+        const icon = document.getElementById('playIcon');
+        icon.classList.toggle('fa-play');
+        icon.classList.toggle('fa-pause');
+    }
+    function toggleMute() {
+        const icon = document.getElementById('volumeIcon');
+        icon.classList.toggle('fa-volume-up');
+        icon.classList.toggle('fa-volume-mute');
+    }
+    function toggleFullscreen() {
+        alert('ফুলস্ক্রিন মোড আসছে...');
+    }
+    function joinClass() {
+        alert('আপনি ক্লাসে যোগ দিয়েছেন!');
+    }
+    function raiseHand() {
+        alert('আপনি হাত তুলেছেন!');
+    }
+    function shareScreen() {
+        alert('স্ক্রিন শেয়ার ফিচার আসছে...');
+    }
+    function downloadMaterial() {
+        alert('উপকরণ ডাউনলোড হচ্ছে...');
+    }
+    function leaveClass() {
+        alert('আপনি ক্লাস ছেড়েছেন।');
+    }
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        if (input.value.trim()) {
+            const chatMessages = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'chat-message';
+            msgDiv.innerHTML = `
+                <div class="message-sender bengali-text">আপনি</div>
+                <div class="message-text bengali-text">${input.value}</div>
+                <div class="message-time">${new Date().toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' })}</div>
+            `;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            input.value = '';
+        }
+    }
+    function watchRecording(id) {
+        alert('ভিডিও দেখার ফিচার আসছে: ' + id);
+    }
+    function downloadRecording(id) {
+        alert('ডাউনলোড শুরু হচ্ছে: ' + id);
+    }
+    function uploadRecording() {
+        alert('আপলোড ফিচার আসছে...');
+    }
+    function searchClasses() {
+        alert('সার্চ ফিচার আসছে...');
+    }
+    function createClass() {
+        alert('নতুন ক্লাস তৈরি হয়েছে!');
+        document.getElementById('createClassForm').reset();
+    }
+    function exportSchedule() {
+        alert('সময়সূচী এক্সপোর্ট হচ্ছে...');
+    }
+</script>
+</body>
+</html>

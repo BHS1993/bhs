@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>লগইন - ভাটিয়া উচ্চ বিদ্যালয়</title>
+    <meta name="description" content="ভাটিয়া উচ্চ বিদ্যালয়ের লগইন সিস্টেম">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/school-theme.css">
+    
+    <!-- Login Specific Styles -->
+    <style>
+        body {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-md);
+        }
+        
+        .login-container {
+            background: var(--white);
+            border-radius: var(--border-radius-xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            width: 100%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+        
+        .login-left {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: var(--white);
+            padding: var(--spacing-2xl);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .login-left-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .school-logo {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-size-4xl);
+        }
+        
+        .school-name {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .school-subtitle {
+            font-size: var(--font-size-lg);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .school-description {
+            font-size: var(--font-size-base);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        .login-right {
+            padding: var(--spacing-2xl);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .login-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .login-subtitle {
+            color: var(--gray);
+            font-size: var(--font-size-base);
+        }
+        
+        .user-type-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .user-type-btn {
+            padding: var(--spacing-md);
+            border: 2px solid #dee2e6;
+            background: var(--white);
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .user-type-btn:hover {
+            border-color: var(--primary-color);
+            background: rgba(0, 87, 146, 0.05);
+        }
+        
+        .user-type-btn.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .user-type-icon {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .user-type-label {
+            font-weight: 500;
+            font-size: var(--font-size-sm);
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: var(--spacing-md);
+            padding-left: var(--spacing-2xl);
+            font-size: var(--font-size-base);
+            border: 2px solid #dee2e6;
+            border-radius: var(--border-radius-md);
+            transition: all var(--transition-fast);
+            font-family: var(--font-family-bengali);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 87, 146, 0.1);
+        }
+        
+        .form-icon {
+            position: absolute;
+            left: var(--spacing-md);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: var(--font-size-lg);
+        }
+        
+        .form-group.has-label .form-icon {
+            top: calc(50% + 12px);
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: var(--spacing-md);
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: var(--font-size-lg);
+        }
+        
+        .form-group.has-label .password-toggle {
+            top: calc(50% + 12px);
+        }
+        
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: var(--spacing-md) 0;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: var(--font-size-sm);
+        }
+        
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            transition: color var(--transition-fast);
+        }
+        
+        .forgot-password:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
+        .login-btn {
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .login-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .back-to-home {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            transition: color var(--transition-fast);
+        }
+        
+        .back-to-home:hover {
+            color: var(--primary-dark);
+            text-decoration: none;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            margin-bottom: var(--spacing-lg);
+            display: none;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            margin-bottom: var(--spacing-lg);
+            display: none;
+            border-left: 4px solid #28a745;
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+            
+            .login-left {
+                padding: var(--spacing-xl);
+                min-height: 200px;
+            }
+            
+            .school-logo {
+                width: 80px;
+                height: 80px;
+                font-size: var(--font-size-2xl);
+            }
+            
+            .school-name {
+                font-size: var(--font-size-xl);
+            }
+            
+            .user-type-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .login-right {
+                padding: var(--spacing-xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fallback definitions inserted by Copilot -->
+<script>
+    // Define a dummy removeFieldError function if not present
+    if (typeof window.removeFieldError !== 'function') {
+        window.removeFieldError = function() {};
+        console.warn('Using fallback for removeFieldError.');
+    }
+    // Set default API base URL if not set
+    if (!window.API_BASE_URL) {
+        window.API_BASE_URL = 'http://localhost:8080';
+        console.warn('API_BASE_URL not set, defaulting to ' + window.API_BASE_URL);
+    }
+</script>
+    <div class="login-container">
+        <!-- Left Side - School Info -->
+        <div class="login-left">
+            <div class="login-left-content">
+                <div class="school-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1 class="school-name bengali-text">ভাটিয়া উচ্চ বিদ্যালয়</h1>
+                <p class="school-subtitle">Bhatia High School</p>
+                <p class="school-description bengali-text">
+                    আধুনিক শিক্ষা ব্যবস্থাপনার মাধ্যমে গড়ে তুলুন উজ্জ্বল ভবিষ্যৎ। 
+                    আমাদের ডিজিটাল প্ল্যাটফর্মে স্বাগতম।
+                    <br>আমাদের লক্ষ্য: শিক্ষার মান উন্নয়ন, প্রযুক্তির ব্যবহার এবং ছাত্র-ছাত্রীদের সর্বাঙ্গীণ বিকাশ।
+                    <br>যোগাযোগ: +৮৮০ ১৭২৬২৭২৫৮০ | ইমেইল:bhatiaschool@gmail.com
+                   <br> Build a bright future through modern education management.
+Welcome to our digital platform.
+<br>Our goal: Improving the quality of education, using technology and all-round development of students.
+<br>Contact: +880 1726272580 | Email:bhatiaschool@gmail.com
+                </p>
+            </div>
+        </div>
+        
+        <!-- Right Side - Login Form -->
+        <div class="login-right">
+            <div class="login-header">
+                <h2 class="login-title bengali-text">লগইন করুন</h2>
+                <p class="login-subtitle bengali-text">আপনার অ্যাকাউন্টে প্রবেশ করুন</p>
+            </div>
+            
+            <!-- Error/Success Messages -->
+            <div id="errorMessage" class="error-message">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span id="errorText"></span>
+            </div>
+            
+            <div id="successMessage" class="success-message">
+                <i class="fas fa-check-circle"></i>
+                <span id="successText"></span>
+            </div>
+            
+            <!-- User Type Selector -->
+            <div class="user-type-selector">
+                <div class="user-type-btn active" data-type="admin">
+                    <div class="user-type-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="user-type-label bengali-text">অ্যাডমিন</div>
+                </div>
+                
+                <div class="user-type-btn" data-type="teacher">
+                    <div class="user-type-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="user-type-label bengali-text">শিক্ষক</div>
+                </div>
+                
+                <div class="user-type-btn" data-type="student">
+                    <div class="user-type-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="user-type-label bengali-text">শিক্ষার্থী</div>
+                </div>
+                
+                <div class="user-type-btn" data-type="parent">
+                    <div class="user-type-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="user-type-label bengali-text">অভিভাবক</div>
+                </div>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="login-form">
+                <div class="form-group has-label">
+                    <label for="username" class="form-label bengali-text">ইউজারনেম / ইমেইল</label>
+                    <i class="fas fa-user form-icon"></i>
+                    <input type="text" id="username" name="username" class="form-control" 
+                           placeholder="আপনার ইউজারনেম বা ইমেইল দিন" required>
+                </div>
+                
+                <div class="form-group has-label">
+                    <label for="password" class="form-label bengali-text">পাসওয়ার্ড</label>
+                    <i class="fas fa-lock form-icon"></i>
+                    <input type="password" id="password" name="password" class="form-control" 
+                           placeholder="আপনার পাসওয়ার্ড দিন" required>
+                    <button type="button" class="password-toggle" onclick="togglePassword()">
+                        <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                    </button>
+                </div>
+                
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <span class="bengali-text">আমাকে মনে রাখুন</span>
+                    </label>
+                    <a href="#" class="forgot-password bengali-text" onclick="showForgotPassword()">
+                        পাসওয়ার্ড ভুলে গেছেন?
+                    </a>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span class="bengali-text">লগইন করুন</span>
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <a href="index.html" class="back-to-home">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="bengali-text">হোম পেজে ফিরে যান</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/school-app.js"></script>
+    <script>
+        // Login System
+        class LoginSystem {
+            constructor() {
+                this.currentUserType = 'admin';
+                // === API BASE URL CONFIGURATION ===
+                // Change this to your backend URL if needed (e.g. 'http://localhost:5000' or your server domain)
+                this.apiBaseUrl = window.API_BASE_URL || window.location.origin;
+                this.users = {
+                    admin: [
+                        { username: 'admin', password: 'admin123', name: 'প্রধান প্রশাসক', role: 'admin' },
+                        { username: 'headmaster', password: 'head123', name: 'প্রধান শিক্ষক', role: 'admin' }
+                    ],
+                    teacher: [
+                        { username: 'teacher1', password: 'teach123', name: 'মোঃ রহিম উদ্দিন', role: 'teacher', subject: 'গণিত' },
+                        { username: 'teacher2', password: 'teach123', name: 'ফাতিমা খাতুন', role: 'teacher', subject: 'বাংলা' },
+                        { username: 'teacher3', password: 'teach123', name: 'করিম আহমেদ', role: 'teacher', subject: 'ইংরেজি' }
+                    ],
+                    student: [
+                        { username: 'student1', password: 'stud123', name: 'রাহুল আহমেদ', role: 'student', class: '10', roll: '01' },
+                        { username: 'student2', password: 'stud123', name: 'ফাতিমা খাতুন', role: 'student', class: '10', roll: '02' },
+                        { username: 'student3', password: 'stud123', name: 'করিম উদ্দিন', role: 'student', class: '9', roll: '15' }
+                    ],
+                    parent: [
+                        { username: 'parent1', password: 'parent123', name: 'আব্দুল করিম', role: 'parent', child: 'রাহুল আহমেদ' },
+                        { username: 'parent2', password: 'parent123', name: 'রাশিদা বেগম', role: 'parent', child: 'ফাতিমা খাতুন' }
+                    ]
+                };
+                this.init();
+            }
+
+            init() {
+                this.setupUserTypeSelector();
+                this.setupLoginForm();
+                this.loadRememberedUser();
+            }
+
+            setupUserTypeSelector() {
+                const userTypeBtns = document.querySelectorAll('.user-type-btn');
+                
+                userTypeBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        // Remove active class from all buttons
+                        userTypeBtns.forEach(b => b.classList.remove('active'));
+                        
+                        // Add active class to clicked button
+                        btn.classList.add('active');
+                        
+                        // Update current user type
+                        this.currentUserType = btn.getAttribute('data-type');
+                        
+                        // Clear form
+                        document.getElementById('loginForm').reset();
+                        this.hideMessages();
+                        
+                        // Update placeholder text based on user type
+                        this.updatePlaceholders();
+                    });
+                });
+            }
+
+            updatePlaceholders() {
+                const usernameInput = document.getElementById('username');
+                const placeholders = {
+                    admin: 'অ্যাডমিন ইউজারনেম দিন',
+                    teacher: 'শিক্ষক আইডি দিন',
+                    student: 'শিক্ষার্থী আইডি দিন',
+                    parent: 'অভিভাবক আইডি দিন'
+                };
+                
+                usernameInput.placeholder = placeholders[this.currentUserType];
+            }
+
+            setupLoginForm() {
+                const loginForm = document.getElementById('loginForm');
+                
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin();
+                });
+            }
+
+            async handleLogin() {
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const rememberMe = document.getElementById('rememberMe').checked;
+
+                if (!username || !password) {
+                    this.showError('ইউজারনেম এবং পাসওয়ার্ড দিন');
+                    return;
+                }
+
+                const loginBtn = document.getElementById('loginBtn');
+                const originalText = loginBtn.innerHTML;
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span class="bengali-text">লগইন হচ্ছে...</span>';
+                loginBtn.disabled = true;
+
+                let retryCount = 0;
+                const maxRetries = 3;
+
+                while (retryCount < maxRetries) {
+                    try {
+                        // Use configured API base URL
+                        const response = await fetch(`${this.apiBaseUrl}/api/auth/login`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                username: username,
+                                password: password,
+                                userType: this.currentUserType
+                            })
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok && data.success) {
+                            this.showSuccess(`স্বাগতম, ${data.data.user.fullName || data.data.user.username}!`);
+                            this.saveAuthData(data.data.accessToken, data.data.user, rememberMe);
+                            setTimeout(() => {
+                                this.redirectUser(data.data.user);
+                            }, 1500);
+                            return;
+                        } else {
+                            this.showError(data.message || 'ভুল ইউজারনেম বা পাসওয়ার্ড');
+                            break;
+                        }
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        retryCount++;
+                        if (error instanceof TypeError && (error.message.includes('NetworkError') || error.message.includes('Failed to fetch') || this.apiBaseUrl === 'null' || this.apiBaseUrl === '' || this.apiBaseUrl === undefined)) {
+                            this.showError('সার্ভার সংযোগে সমস্যা হয়েছে। দয়া করে লোকাল সার্ভার (Live Server বা http-server) দিয়ে চালান এবং API BASE URL সঠিকভাবে সেট করুন।');
+                        } else {
+                            const errorMessage = error.message || 'সার্ভার সংযোগে সমস্যা হয়েছে। আবার চেষ্টা করুন।';
+                            this.showError(errorMessage);
+                        }
+                        if (retryCount >= maxRetries) {
+                            console.error('Max retries reached:', error);
+                        }
+                    }
+                }
+
+                loginBtn.innerHTML = originalText;
+                loginBtn.disabled = false;
+            }
+
+            // authenticateUser method removed - now using backend API
+
+            saveAuthData(token, user, rememberMe) {
+                try {
+                    // Save token
+                    if (rememberMe) {
+                        localStorage.setItem('adminToken', token);
+                        localStorage.setItem('adminUser', JSON.stringify(user));
+                    } else {
+                        sessionStorage.setItem('adminToken', token);
+                        sessionStorage.setItem('adminUser', JSON.stringify(user));
+                    }
+                } catch (error) {
+                    console.error('Auth data save error:', error);
+                    this.showError('অনুমোদন ডেটা সংরক্ষণে সমস্যা হয়েছে।');
+                }
+            }
+
+            loadRememberedUser() {
+                const savedToken = localStorage.getItem('adminToken');
+                const savedUser = localStorage.getItem('adminUser');
+                
+                if (savedToken && savedUser) {
+                    try {
+                        const userData = JSON.parse(savedUser);
+                        document.getElementById('username').value = userData.username;
+                        document.getElementById('rememberMe').checked = true;
+                        
+                        // Set user type based on user role
+                        const userType = this.getUserTypeFromRole(userData.role);
+                        this.currentUserType = userType;
+                        document.querySelector(`[data-type="${userType}"]`).click();
+                    } catch (e) {
+                        localStorage.removeItem('adminToken');
+                        localStorage.removeItem('adminUser');
+                    }
+                }
+            }
+
+            getUserTypeFromRole(role) {
+                const roleMap = {
+                    'admin': 'admin',
+                    'teacher': 'teacher',
+                    'student': 'student',
+                    'parent': 'parent'
+                };
+                return roleMap[role] || 'admin';
+            }
+
+            redirectUser(user) {
+                const redirectPaths = {
+                    admin: 'admin/index.html',
+                    teacher: 'teacher/dashboard.html',
+                    student: 'student/dashboard.html',
+                    parent: 'parent/dashboard.html'
+                };
+
+                // Use user role from backend or fallback to current user type
+                const userRole = user.role || this.currentUserType;
+                const path = redirectPaths[userRole];
+                
+                if (path) {
+                    window.location.href = path;
+                } else {
+                    this.showError('রিডাইরেক্ট পাথ পাওয়া যায়নি।');
+                }
+            }
+
+            showError(message) {
+                const errorDiv = document.getElementById('errorMessage');
+                const errorText = document.getElementById('errorText');
+                
+                errorText.textContent = message;
+                errorDiv.style.display = 'block';
+                
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 5000);
+            }
+
+            showSuccess(message) {
+                const successDiv = document.getElementById('successMessage');
+                const successText = document.getElementById('successText');
+                
+                successText.textContent = message;
+                successDiv.style.display = 'block';
+            }
+
+            hideMessages() {
+                document.getElementById('errorMessage').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'none';
+            }
+
+            removeFieldError() {
+                // Dummy method to prevent TypeError from school-app.js
+            }
+        }
+
+        // Patch LoginSystem prototype to include a dummy removeFieldError method if it doesn't exist
+        if (window.LoginSystem && !LoginSystem.prototype.removeFieldError) {
+            LoginSystem.prototype.removeFieldError = function() {
+                console.warn('LoginSystem.removeFieldError fallback used');
+            };
+        }
+
+        // Global functions
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.className = 'fas fa-eye';
+            }
+        }
+
+        function showForgotPassword() {
+            alert('পাসওয়ার্ড রিসেট করার জন্য অ্যাডমিনের সাথে যোগাযোগ করুন:\nফোন: +৮৮০ ১৭২৬২৭২৫৮০\nইমেইল: bhatiaschool@gmail.com');
+        }
+
+        // Initialize login system
+        document.addEventListener('DOMContentLoaded', function() {
+            new LoginSystem();
+        });
+
+        // Demo credentials info
+        console.log('Demo Login Credentials:');
+        console.log('Admin: admin/admin123 or headmaster/head123');
+        console.log('Teacher: teacher1/teach123, teacher2/teach123, teacher3/teach123');
+        console.log('Student: student1/stud123, student2/stud123, student3/stud123');
+        console.log('Parent: parent1/parent123, parent2/parent123');
+
+        // Enhance global fetch to provide clearer error messages for network/CORS errors
+        (function() {
+            const originalFetch = window.fetch;
+            window.fetch = function(...args) {
+                return originalFetch.apply(this, args).catch(error => {
+                    console.error('Enhanced fetch error:', error);
+                    alert('Network error occurred. Please ensure your backend is running and CORS settings are correctly configured.');
+                    throw error;
+                });
+            };
+        })();
+    </script>
+<script>
+    // Ensure that the LoginSystem has a fallback removeFieldError method after all scripts have loaded
+    window.addEventListener('load', function() {
+        if (window.LoginSystem && typeof LoginSystem.prototype.removeFieldError !== 'function') {
+            LoginSystem.prototype.removeFieldError = function() {
+                console.warn('Fallback: removeFieldError is now defined on LoginSystem');
+            };
+            console.info('Fallback removeFieldError method added to LoginSystem');
+        }
+    });
+</script>
+</body>
+</html>

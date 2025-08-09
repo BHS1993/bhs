@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://bhatiahighschool.edu.bd/sitemap.xml
+
+# Disallow admin and sensitive areas
+Disallow: /admin/
+Disallow: /login.html
+Disallow: /server.js
+Disallow: /package.json
+Disallow: /node_modules/
+
+# Allow public pages
+Allow: /index.html
+Allow: /admission/
+Allow: /results/
+Allow: /calendar/
+Allow: /assets/
+
+# Crawl delay
+Crawl-delay: 1
